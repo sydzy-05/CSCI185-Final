@@ -1,0 +1,51 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class InfoPage extends JFrame implements ActionListener {
+  private JButton RothButton;
+  private JButton fourOhOneKButton;
+
+  public static void main(String[] args) {
+    new InfoPage();
+  }
+
+  public InfoPage() {
+    setTitle("Info Page");
+    setSize(1000, 1000);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JPanel mainPanel = new JPanel(new BorderLayout());
+    JPanel textPanel = new JPanel();
+    JLabel RothLabel = new JLabel("Roth IRA:");
+    JLabel fourOhOneKLabel = new JLabel("401(k) Plan ");
+
+    textPanel.add(RothLabel);
+    textPanel.add(fourOhOneKLabel);
+    JPanel buttonPanel = new JPanel();
+
+    RothButton = new JButton("Roth IRA Plan");
+    fourOhOneKButton = new JButton("401K Plan");
+
+    RothButton.addActionListener(this);
+    fourOhOneKButton.addActionListener(this);
+
+    buttonPanel.add(RothButton);
+    buttonPanel.add(fourOhOneKButton);
+
+    mainPanel.add(textPanel, BorderLayout.CENTER);
+    mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+    add(mainPanel);
+    setVisible(true);
+  }
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == RothButton) {
+      new RetirementPage("Roth Page");
+    }
+    if (e.getSource() == fourOhOneKButton) {
+      new RetirementPage("401 Page");
+    }
+  }
+}
