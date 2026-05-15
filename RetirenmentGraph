@@ -1,40 +1,116 @@
-import org.knowm.xchart.*;
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
-public class RetirementChart {
+public class RetirementGraphPanel extends JPanel {
 
-    public static void showChart(
-            ArrayList<Integer> ages,
-            ArrayList<Double> roth,
-            ArrayList<Double> traditional
-    ) {
+    private ArrayList<Integer> ages = new ArrayList<>();
+    private ArrayList<Double> roth = new ArrayList<>();
+    private ArrayList<Double> traditional = new ArrayList<>();
 
-        double[] xData = new double[ages.size()];
-        double[] y1 = new double[ages.size()];
-        double[] y2 = new double[ages.size()];
+    public RetirementGraphPanel() {
+        setBackground(Color.WHITE);
+    }
 
-        for (int i = 0; i < ages.size(); i++) {
-            xData[i] = ages.get(i);
-            y1[i] = roth.get(i);
-            y2[i] = traditional.get(i);
+    public void setData(ArrayList<Integer> ages,
+                        ArrayList<Double> roth,
+                        ArrayList<Double> traditional) {
+
+        this.ages = ages;
+        this.roth = roth;
+        this.traditional = traditional;
+
+        
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        if (ages == null || ages.size() < 2) return;
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        int w = getWidth();
+        int h = getHeight();
+
+        int left = 70;
+        int right = w - 40;
+        int top = 40;
+        int bottom = h - 60;
+        
+        g2.setColor(Color.BLACK);
+        g2.drawLine(left, bottom, right, bottom); // X axis
+        g2.drawLine(left, bottom, left, top);     // Y axis
+        
+        double max = 0;
+        for (double v : roth) max = Math.max(max, v);
+        for (double v : traditional) max = Math.max(max, v);
+        if (max == 0) max = 1;
+
+        int n = ages.size();
+
+        for (int i = 1; i < n; i++) {
+
+            int x1 = left + (i - 1) * (right - left) / (n - 1);
+            int x2 = left + i * (right - left) / (n - 1);
+
+            int y1R = bottom - (int)((roth.get(i - 1) / max) * (bottom - top));
+            int y2R = bottom - (int)((roth.get(i) / max) * (bottom - top));
+
+            int y1T = bottom - (int)((traditional.get(i - 1) / max) * (bottom - top));
+            int y2T = bottom - (int)((traditional.get(i) / max) * (bottom - top));
+
+            // Roth line
+            g2.setColor(Color.BLUE);
+            g2.drawLine(x1, y1R, x2, y2R);
+
+            // Traditional line
+            g2.setColor(Color.RED);
+            g2.drawLine(x1, y1T, x2, y2T);
         }
 
-        XYChart chart = new XYChartBuilder()
-                .width(800)
-                .height(500)
-                .title("Retirement Savings Over Time")
-                .xAxisTitle("Age")
-                .yAxisTitle("Balance ($)")
-                .build();
+        // labels
+        g2.setColor(Color.BLACK);
+        g2.drawString("Age", w / 2, h - 20);
+        g2.drawString("Balance($)  ", 5, h / 2);
 
-        chart.addSeries("Roth 401k, IRA", xData, y1);
-        chart.addSeries("Traditional", xData, y2);
 
-        JFrame frame = new JFrame("Retirement Graph");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.add(new XChartPanel<>(chart));
-        frame.pack();
+        g2.setColor(Color.BLUE);
+        g2.drawString("Roth", w - 120, 60);
+
+        g2.setColor(Color.RED);
+        g2.drawString("Traditional", w - 90, 150);
+    }
+    public static void main(String[] args) {
+
+        JFrame frame = new JFrame("Graph: Retirement Savings");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        RetirementGraphPanel graph = new RetirementGraphPanel();
+
+
+        ArrayList<Integer> ages = new ArrayList<>();
+        ArrayList<Double> roth = new ArrayList<>();
+        ArrayList<Double> traditional = new ArrayList<>();
+
+        double r = 10000;
+        double t = 12000;
+
+        for (int age = 25; age <= 65; age++) {
+            ages.add(age);
+
+            r = r * 1.07 + 4000;
+            t = t * 1.06 + 3500;
+
+            roth.add(r);
+            traditional.add(t);
+        }
+
+        graph.setData(ages, roth, traditional);
+
+        frame.setContentPane(graph);
+        frame.setSize(900, 600);
         frame.setVisible(true);
     }
 }
