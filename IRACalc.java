@@ -91,6 +91,15 @@ public class IRACalc extends JPanel implements ActionListener {
             }
             traditionalBalance *= (1 - txRate);
 
+            JOptionPane.showMessageDialog(this,"Roth IRA Final Balance: $" + 
+                                          String.format("%,.2f", rothBalance) +      
+                                          "\nTotal Contributions: $" + String.format("%,.2f", rothContributions) +                  
+                                          "\n\nTraditional IRA Final Balance: $" + String.format("%,.2f", traditionalBalance) +                   
+                                          "\nTotal Contributions: $" + String.format("%,.2f", traditionalContributions),                 
+                                          "IRA Results",                  
+                                          JOptionPane.INFORMATION_MESSAGE);
+            
+
         }
         catch(NumberFormatException ex){
             JOptionPane.showMessageDialog(this,
