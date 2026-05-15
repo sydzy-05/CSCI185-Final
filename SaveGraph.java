@@ -1,3 +1,10 @@
+/* 
+Project: Retirement Account Calculator
+Course: CSCI-185 M01 - Computer Programming II
+Contributors: Sydney Jacob
+Last Contribution: 05/15/2026
+*/
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
