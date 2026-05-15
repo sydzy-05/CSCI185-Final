@@ -18,17 +18,17 @@ public class InfoPage extends JFrame implements ActionListener {
 
     JPanel mainPanel = new JPanel(new BorderLayout());
     JPanel textPanel = new JPanel();
-    JLabel RothLabel = new JLabel("Roth IRA:");
-    textPanel.add(RothLabel);
-
-    JLabel fourOhOneKLabel = new JLabel("401(k) Plan ");
-    textPanel.add(fourOhOneKLabel);
     JPanel buttonPanel = new JPanel();
 
+    JLabel RothLabel = new JLabel("Roth IRA:");
+    textPanel.add(RothLabel);
+    
     RothButton = new JButton("Roth IRA Plan");
     RothButton.addActionListener(this);
     buttonPanel.add(RothButton);
 
+    JLabel fourOhOneKLabel = new JLabel("401(k) Plan ");
+    textPanel.add(fourOhOneKLabel);
     fourOhOneKButton = new JButton("401K Plan");
     fourOhOneKButton.addActionListener(this);
     buttonPanel.add(fourOhOneKButton);
