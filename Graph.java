@@ -1,0 +1,41 @@
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+public class Graph{
+    private File graph;
+
+    public Graph(String dir) throws IOException{
+        graph = new File(dir);
+        if (graph.createNewFile()){
+            System.out.println("File has been created");
+        }
+        else System.out.println("File already exists");
+
+    }
+
+    public void saveImage(JFrame frame){
+        try{
+            Container contentPane = frame.getContentPane();
+            BufferedImage image = new BufferedImage(
+                    contentPane.getWidth(),
+                    contentPane.getHeight(),
+                    BufferedImage.TYPE_INT_RGB
+            );
+
+            Graphics2D g2d = image.createGraphics();
+            contentPane.printAll(g2d);
+            g2d.dispose();
+
+            ImageIO.write(image, "png", graph);
+            System.out.println("Image saved successfully");
+        }
+        catch (IOException e){
+            System.out.println("An error occurred when saving the image");
+        }
+    }
+
+}
