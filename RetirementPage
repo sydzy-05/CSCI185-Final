@@ -1,0 +1,51 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class RetirementPage extends JFrame implements ActionListener {
+  private JTextField[] textFields;
+  private JButton calculateButton;
+  private JButton saveButton;
+
+  public RetirementPage(String title) {
+    setTitle(title);
+    setSize(500, 500);
+
+    JPanel mainPanel = new JPanel();
+    mainPanel.setLayout(new BorderLayout());
+    JPanel inputPanel = new JPanel();
+    inputPanel.setLayout(new GridLayout(9, 2, 10, 10));
+
+    textFields = new JTextField[6];
+    for (int i = 0; i < 6; i++) {
+      JLabel label = new JLabel("Enter here:");
+      textFields[i] = new JTextField();
+      inputPanel.add(label);
+      inputPanel.add(textFields[i]);
+    }
+
+    JPanel buttonPanel = new JPanel();
+    calculateButton = new JButton("Calculate");
+    calculateButton.addActionListener(this);
+    buttonPanel.add(calculateButton);
+
+    saveButton = new JButton("Save");
+    saveButton.addActionListener(this);
+    buttonPanel.add(saveButton);
+
+    mainPanel.add(inputPanel, BorderLayout.CENTER);
+    mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+    add(mainPanel);
+    setVisible(true);
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == calculateButton) {
+      GraphPage graph = new GraphPage();
+      graph.setVisible(true);
+    }
+  }
+}
