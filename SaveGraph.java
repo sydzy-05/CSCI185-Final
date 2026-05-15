@@ -8,11 +8,13 @@ Last Contribution: 05/15/2026
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class SaveGraph{
+public class SaveGraph implements ActionListener {
     private File graph;
 
     public SaveGraph(String dir) throws IOException{
@@ -45,4 +47,8 @@ public class SaveGraph{
         }
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e){
+        saveImage(RetirementChart.frame);
+    }
 }
