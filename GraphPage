@@ -1,0 +1,9 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class GraphPage extends JFrame {
+  public GraphPage() {
+    setTitle("Graph");
+    setSize(500, 500);
+  }
+}
