@@ -1,0 +1,40 @@
+import org.knowm.xchart.*;
+import javax.swing.*;
+import java.util.ArrayList;
+
+public class RetirementChart {
+
+    public static void showChart(
+            ArrayList<Integer> ages,
+            ArrayList<Double> roth,
+            ArrayList<Double> traditional
+    ) {
+
+        double[] xData = new double[ages.size()];
+        double[] y1 = new double[ages.size()];
+        double[] y2 = new double[ages.size()];
+
+        for (int i = 0; i < ages.size(); i++) {
+            xData[i] = ages.get(i);
+            y1[i] = roth.get(i);
+            y2[i] = traditional.get(i);
+        }
+
+        XYChart chart = new XYChartBuilder()
+                .width(800)
+                .height(500)
+                .title("Retirement Savings Over Time")
+                .xAxisTitle("Age")
+                .yAxisTitle("Balance ($)")
+                .build();
+
+        chart.addSeries("Roth 401k, IRA", xData, y1);
+        chart.addSeries("Traditional", xData, y2);
+
+        JFrame frame = new JFrame("Retirement Graph");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.add(new XChartPanel<>(chart));
+        frame.pack();
+        frame.setVisible(true);
+    }
+}
